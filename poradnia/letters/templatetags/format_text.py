@@ -2,7 +2,7 @@ from django import template
 from django.template.defaultfilters import stringfilter, linebreaks_filter
 from django.utils.safestring import mark_safe
 from django.conf import settings
-import mistune
+from markdown_it import MarkdownIt
 
 register = template.Library()
 
@@ -15,6 +15,7 @@ def format_text(text):
         return linebreaks_filter(text)
 
 def parse_markdown(text):
-    md = mistune.create_markdown()
-    html = md(text)
+    print(text)
+    md = MarkdownIt().disable("list")
+    html = md.render(text)
     return mark_safe(html)
